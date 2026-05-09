@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:31,180
+A billion people participate in rotating savings groups every day. Korean kye, Mexican tanda, West African sou-sou. Neighbors pool money each cycle and rotate the payout — the world's oldest form of community finance. But organizers disappear, records live in messy chats, and reliable participants build no portable credit.
+
+2
+00:00:31,680 --> 00:01:07,670
+Roosta turns rotating savings into a Solana-native protocol. The smart contract replaces the human organizer; every deposit and payout flows through on-chain escrow. Position NFTs encode each member's slot. Collateral NFTs lock risk deposits. Credit SBTs — non-transferable Token-2022 tokens — track behavior. Trust Gate decides who can claim early slots.
+
+3
+00:01:08,170 --> 00:01:46,520
+Creating a circle takes 30 seconds. Set member count, contribution, and duration. Open Risk Parameters to toggle Trust Gate, Risk Deposit, and Locked Reserve. When a member tries to claim slot one — the first to receive — Trust Gate evaluates them in real time, pulling Helius wallet history and on-chain Credit SBT, computing a Trust Tier. Below Tier 3, slot one is auto-rejected.
+
+4
+00:01:47,020 --> 00:02:19,420
+Members initialize a Roosta vault — a Polymarket-style proxy wallet — and top up once. Every deposit pulls from the vault automatically. A real Metaplex Position NFT is minted, frozen, non-transferable proof of membership. Once everyone deposits, the contract settles the round automatically. Every transaction lives on Solana Explorer, forever.
+
+5
+00:02:19,920 --> 00:02:53,160
+What if someone defaults? After the deadline: mark delayed. After grace: mark default. If they're an early borrower, their collateral and locked reserve are slashed. Their Credit SBT updates instantly: default count up, Trust Tier reset. Built on Token-2022 NonTransferable, the reputation can't escape the wallet. Real, portable, on-chain credit.
+
+6
+00:02:53,660 --> 00:03:17,210
+Sub-cent fees. 400ms confirmations. Native USDC. A gasless relayer means users don't even need to hold SOL. A billion people, doing the oldest form of finance — now portable, transparent, and on-chain. Try it on Devnet at roosta-mvp.vercel.app.

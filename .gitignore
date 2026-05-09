@@ -1,0 +1,45 @@
+# rust / anchor
+target/
+**/*.rs.bk
+Cargo.lock
+
+# node
+node_modules/
+.next/
+dist/
+.vercel/
+
+# env
+.env
+.env.local
+.env*.local
+
+# secrets
+*.json.bak
+**/id.json
+**/devnet.json
+
+# build artifacts
+target/deploy/*.so
+target/deploy/*-keypair.json
+target/idl/
+target/types/
+target/debug/
+target/release/
+target/sbf-solana-solana/
+target/bpfel-unknown-unknown/
+
+# anchor
+.anchor/
+test-ledger/
+
+# playwright / video
+scripts/out/audio/
+scripts/out/*.webm
+scripts/out/*.wav
+scripts/out/concat.txt
+scripts/out/silence.wav
+
+# misc
+.DS_Store
+*.log

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "types": ["mocha", "chai", "node"],
+    "typeRoots": ["./node_modules/@types"],
+    "lib": ["es2015", "es2017", "es2019", "esnext.bigint"],
+    "module": "commonjs",
+    "target": "es2019",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "strict": false,
+    "skipLibCheck": true
+  }
+}

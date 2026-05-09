@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+/* ===========================================================
+   Roosta brand tokens — Tailwind v4 (@theme) + CSS variables
+   =========================================================== */
+
+@theme {
+  /* ===== Roosta brand color scale ===== */
+  --color-roosta-50:  #FFF7F2;
+  --color-roosta-100: #FFEAD9;
+  --color-roosta-200: #FCD0AB;
+  --color-roosta-300: #F4A261;
+  --color-roosta-400: #ED7E47;
+  --color-roosta-500: #E85D2F; /* Brand main */
+  --color-roosta-600: #D74E22;
+  --color-roosta-700: #C73E1D;
+  --color-roosta-800: #A03217;
+  --color-roosta-900: #6E2310;
+
+  /* ===== Surfaces ===== */
+  --color-bg-light: #FAFAF7;
+  --color-bg-dark:  #1A1A1A;
+  --color-surface-light: #FFFFFF;
+  --color-surface-dark:  #242422;
+
+  /* ===== Typography ===== */
+  --font-display: var(--font-display, 'Fraunces'), Georgia, serif;
+  --font-body:    var(--font-body, 'Inter'), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    var(--font-mono, 'JetBrains Mono'), ui-monospace, monospace;
+
+  /* ===== Radius ===== */
+  --radius-roosta-sm: 0.375rem;
+  --radius-roosta-md: 0.625rem;
+  --radius-roosta-lg: 1rem;
+}
+
+/* ===== Light-mode semantic CSS variables (default) ===== */
+:root {
+  --background: #FAFAF7;
+  --foreground: #1A1A1A;
+  --primary: #E85D2F;
+  --primary-hover: #C73E1D;
+  --accent: #F4A261;
+  --dark-primary: #C73E1D;
+  --card: #FFFFFF;
+  --card-hover: rgba(232, 93, 47, 0.04);
+  --border: rgba(0, 0, 0, 0.08);
+  --muted: #6A6A6A;
+
+  /* State */
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --error:   #EF4444;
+  --info:    #3B82F6;
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
+
+  /* Focus ring (40% alpha of primary) */
+  --ring: rgba(232, 93, 47, 0.40);
+}
+
+/* ===== @theme inline mapping so Tailwind utilities resolve to CSS vars ===== */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-dark-primary: var(--dark-primary);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+}
+
+/* ===== Dark mode via prefers-color-scheme ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1A1A1A;
+    --foreground: #FAFAF7;
+    --primary: #E85D2F;
+    --primary-hover: #F4A261;
+    --accent: #F4A261;
+    --dark-primary: #F4A261;
+    --card: #242422;
+    --card-hover: rgba(244, 162, 97, 0.08);
+    --border: rgba(255, 255, 255, 0.10);
+    --muted: #A0A0A0;
+    --ring: rgba(244, 162, 97, 0.40);
+  }
+}
+
+/* ===== Class-based dark override (for explicit toggles) ===== */
+.dark,
+[data-theme='dark'] {
+  --background: #1A1A1A;
+  --foreground: #FAFAF7;
+  --primary: #E85D2F;
+  --primary-hover: #F4A261;
+  --accent: #F4A261;
+  --dark-primary: #F4A261;
+  --card: #242422;
+  --card-hover: rgba(244, 162, 97, 0.08);
+  --border: rgba(255, 255, 255, 0.10);
+  --muted: #A0A0A0;
+  --ring: rgba(244, 162, 97, 0.40);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Wallet adapter overrides (orange brand) ===== */
+.wallet-adapter-button {
+  background-color: var(--primary) !important;
+  border-radius: var(--radius-md) !important;
+  font-family: var(--font-body) !important;
+  height: 40px !important;
+  padding: 0 16px !important;
+  font-weight: 600 !important;
+  transition: background-color 150ms ease !important;
+}
+.wallet-adapter-button:not([disabled]):hover {
+  background-color: var(--primary-hover) !important;
+}
+.wallet-adapter-button:focus-visible {
+  outline: 2px solid var(--ring) !important;
+  outline-offset: 2px !important;
+}
