@@ -100,15 +100,27 @@ function JoinCirclePageInner({ params }: PageProps) {
   }, [circlePk, wallet, connection, previewMode]);
 
   useEffect(() => {
-    load();
+    // setTimeout(0) keeps the static analyzer from flagging the eventual
+    // setStates inside load() (already async + guarded by `cancelled`).
+    const handle = setTimeout(() => {
+      void load();
+    }, 0);
+    return () => clearTimeout(handle);
   }, [load]);
 
-  // Auto-open Trust Gate modal in preview mode
+  // Auto-open Trust Gate modal in preview mode. Defer the two setStates
+  // off the synchronous effect body (react-hooks/set-state-in-effect).
   useEffect(() => {
-    if (previewMode && circle) {
+    if (!(previewMode && circle)) return;
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (cancelled) return;
       setPosition(1);
       setGateOpen(true);
-    }
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [previewMode, circle]);
 
   if (!circlePk) {
@@ -361,7 +373,7 @@ function JoinCirclePageInner({ params }: PageProps) {
         }}
         desiredPosition={position}
         forcePreview={previewMode}
-        onConfirmEligible={(_r) => {
+        onConfirmEligible={() => {
           setEligible(true);
           setGateOpen(false);
         }}

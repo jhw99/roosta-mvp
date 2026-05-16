@@ -5,7 +5,16 @@
   "license": "MIT",
   "scripts": {
     "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
-    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
+    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check",
+    "qa:typecheck": "cd app && npx tsc --noEmit && cd .. && npx tsc -p tsconfig.json --noEmit",
+    "qa:lint": "cd app && npx eslint --max-warnings=0 . && cd .. && pnpm run lint || npm run lint",
+    "qa:unit": "anchor test --skip-build --provider.cluster localnet",
+    "qa:integration": "anchor test --skip-build --provider.cluster localnet",
+    "qa:build": "cd app && npx next build",
+    "qa:smoke": "node scripts/qa-smoke.mjs",
+    "qa:e2e": "playwright test --config=playwright.config.ts",
+    "qa:e2e:prod": "PLAYWRIGHT_USE_PROD=1 playwright test --config=playwright.config.ts",
+    "qa:all": "npm run qa:typecheck && npm run qa:lint && npm run qa:build && npm run qa:integration && npm run qa:e2e:prod"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.31.1",

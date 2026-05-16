@@ -16,7 +16,7 @@ cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
-test = "npx ts-mocha -p ./tsconfig.json -t 1000000 tests/roosta.ts tests/02_credit_profile.ts tests/03_risk_lifecycle.ts tests/04_default.ts tests/05_position_nft.ts"
+test = "npx ts-mocha -p ./tsconfig.json -t 1000000 tests/roosta.ts tests/02_credit_profile.ts tests/03_risk_lifecycle.ts tests/04_default.ts tests/05_position_nft.ts tests/06_trust_gate_bypass.ts"
 
 [test]
 startup_wait = 10000

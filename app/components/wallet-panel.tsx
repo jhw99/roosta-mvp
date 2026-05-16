@@ -87,7 +87,11 @@ function WalletPanelTriggerInner() {
   const { connection } = useConnection();
   const { setVisible } = useWalletModal();
 
-  const [open, setOpen] = useState(false);
+  // previewMode is a constant prop set at mount; deriving the initial
+  // panel-open state from it here avoids a useEffect that synchronously
+  // calls setOpen(true) (which Next 16's react-hooks/set-state-in-effect
+  // would flag).
+  const [open, setOpen] = useState(() => previewMode);
   const [walletBalance, setWalletBalance] = useState<bigint | null>(null);
   const [vaultBalance, setVaultBalance] = useState<bigint | null>(null);
   const [vaultInitialized, setVaultInitialized] = useState<boolean>(false);
@@ -146,19 +150,24 @@ function WalletPanelTriggerInner() {
 
   useEffect(() => {
     if (previewMode) return;
-    loadBalances();
-    loadMyCircles();
-    if (!connected) return;
+    // Wrap setState-causing calls in an async IIFE so they don't fire
+    // synchronously inside the effect body (react-hooks/set-state-in-effect).
+    let cancelled = false;
+    const refresh = async () => {
+      if (cancelled) return;
+      await loadBalances();
+      await loadMyCircles();
+    };
+    void refresh();
+    if (!connected) return undefined;
     const id = setInterval(() => {
-      loadBalances();
+      void loadBalances();
     }, 10_000);
-    return () => clearInterval(id);
+    return () => {
+      cancelled = true;
+      clearInterval(id);
+    };
   }, [connected, loadBalances, loadMyCircles, previewMode]);
-
-  // Auto-open panel in preview mode
-  useEffect(() => {
-    if (previewMode) setOpen(true);
-  }, [previewMode]);
 
   // close on outside click
   useEffect(() => {

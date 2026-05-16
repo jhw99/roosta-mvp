@@ -40,7 +40,6 @@ export async function GET(
     }
 
     // Fetch member statuses for each member.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const members = await Promise.all(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (circle.members as any[]).map(async (wallet) => {

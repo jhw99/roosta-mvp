@@ -43,3 +43,11 @@ scripts/out/silence.wav
 # misc
 .DS_Store
 *.log
+
+# qa / playwright artifacts
+playwright-report/
+test-results/
+e2e/.cache/
+
+# claude scheduler
+.claude/scheduled_tasks.lock

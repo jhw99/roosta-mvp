@@ -65,15 +65,15 @@ function ProfilePageInner() {
   const [entries, setEntries] = useState<MemberEntry[]>([]);
   const [credit, setCredit] = useState<CreditProfileAccount | null>(null);
   const [creditMissing, setCreditMissing] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // In preview mode we don't fetch anything, so start with loading=false to
+  // avoid the early setLoading(false) call inside the effect body (which
+  // Next 16's react-hooks/set-state-in-effect would flag).
+  const [loading, setLoading] = useState(!previewMode);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (previewMode) {
-      setLoading(false);
-      return;
-    }
+    if (previewMode) return;
     let cancelled = false;
     async function load() {
       if (!wallet) {
