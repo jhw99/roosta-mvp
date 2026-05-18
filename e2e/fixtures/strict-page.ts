@@ -77,6 +77,16 @@ export const test = base.extend<{
       // any non-prefetch URL still fails the test.
       const isPrefetchAbort = /_rsc=/.test(url) && errText === "net::ERR_ABORTED";
       if (isPrefetchAbort) return;
+      // Devnet RPC + 3rd-party font CDN occasionally ABORT during a hot
+      // navigation; both are external (we don't control) and don't
+      // affect the assertion being tested. Ignore only the ABORTED
+      // variant — real failures (4xx/5xx) still propagate via the
+      // response handler below.
+      if (errText === "net::ERR_ABORTED" && (
+        /api\.devnet\.solana\.com/.test(url) ||
+        /fonts\.gstatic\.com/.test(url) ||
+        /helius/.test(url)
+      )) return;
       failures.push(`requestfailed: ${url} — ${errText}`);
     });
     page.on("response", (res) => {
