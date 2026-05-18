@@ -126,3 +126,38 @@ Product owner 확정 응답이 오면 [POLICY_ASSUMPTIONS.md](POLICY_ASSUMPTIONS
 ✅ 모든 게이트 GREEN: tsc / lint / build / smoke / playwright 32/32 / anchor 16/16.
 
 본 sweep 의 산출물 (specs, fixture, lint 수정, POLICY_ASSUMPTIONS) 은 모두 `docs/qa/` 와 `e2e/` 에 반영됨. Phase B (Telegram) 진행 가능.
+
+---
+
+## Sweep #2 (2026-05-18) — cold build + state matrix
+
+Mirror of the Roosta-TG sweep — same shape, adapted for Solana stack.
+
+### New scripts / commands
+
+- `scripts/qa-build-cold.mjs` + `qa:build:cold`:
+  Wipes `app/.next` + `target/idl|types` + `app/node_modules/.cache`,
+  runs `npm install` + `next build` + `anchor build`. Catches the
+  Vercel cache-miss + anchor build-cache-gap failure modes locally.
+
+### New spec
+
+- `e2e/07-circle-detail-states.spec.ts`:
+  - disconnected visitor → public info visible, member CTAs hidden
+  - connected test-wallet (non-member) → real ed25519-keypair-signed
+    connect via the existing `KeypairWalletAdapter`, still no
+    Deposit/Payout for non-members
+  - `/demo` route mounts without wallet or chain
+
+### strict-page filter extension
+
+Ignored `net::ERR_ABORTED` on `api.devnet.solana.com` / `fonts.gstatic.com`
+/ `helius` URLs (external aborts during nav). Response status 4xx/5xx
+checks still propagate.
+
+### Test totals (chromium-desktop, qa:e2e:prod)
+
+19 passed, 0 failed. Up from 16-spec baseline of Sweep #1.
+
+Anchor test suite: 16/16 unchanged.
+Lint: 0/0 unchanged.
